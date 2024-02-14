@@ -33,16 +33,52 @@
     };
 
     var game = new Phaser.Game(config);
+    var passarinho;
+    var velocidadeVoo = 5; // Variável que influencia frameRate e pixels de deslocamento do passarinho
+
     // Função de carregamento dos assets
     function preload() {
         this.load.image('bg', 'assets/bg_space.png');
+        this.load.spritesheet('bird', 'assets/bird-green.png', { frameWidth: 75, frameHeight: 75 });
     }
     // Função de criação de imagens, áudios, objetos
     function create() {
         this.add.image(400, 300, 'bg').setScale(1.2);
+        passarinho = this.add.sprite(100, 300, 'bird').setScale(1.3);
+
+        // Cria a animação de voo para passarinho
+        this.anims.create({
+            key: 'fly',
+            frames: this.anims.generateFrameNumbers('bird', { start: 0, end: 7 }),
+            frameRate: velocidadeVoo*2,
+            repeat: -1
+        });
+
+        // Ativa a animação de fly do passarinho
+        passarinho.anims.play('fly', true);
+
     }
     // Função de atualização da lógica do game, chamada uma vez a cada game step
     function update() { 
+
+        // --- Lógica de movimento infinito do passarinho
+        if (passarinho.x === 100) {                             // Condição ativada quando passarinho possui x = 100
+            passarinho.setFlip(false,false);                    // Define a orientação do passarinho para a direita
+            passarinho.ida = true;                              // Define a propriedade booleana "ida" de passarinho para verdadeira
+        }
+        if (passarinho.x < 700 && passarinho.ida === true) {    // Condição ativada quando passarinho possui x < 700 e variável pass.ida é verdadeira
+            console.log("Indo para a direita");                 // Log de direção
+            passarinho.x += velocidadeVoo;                      // Cria o deslocamento contínuo positivo de 5 pixels para passarinho
+        }
+        if (passarinho.x === 700) {                             // Condição ativada quando passarinho possui x = 700
+            passarinho.setFlip(true,false);                     // Define a orientação do passarinho para a esquerda
+            passarinho.ida = false;                             // Define a propriedade booleana "ida" de passarinho para falsa
+        }
+        if (passarinho.x > 100 && passarinho.ida === false) {   // Condição ativada quando passarinho possui x > 100 e variável pass.ida é falsa
+            console.log("Indo para a esqueda");                 // Log de direção
+            passarinho.x -= velocidadeVoo;                      // Cria o deslocamento contínuo negativo de 5 pixels para passarinho
+        }
+
     }
 
 </script>
