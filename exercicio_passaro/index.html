@@ -24,10 +24,6 @@
         type: Phaser.AUTO,
         width: 800,
         height: 600,
-        fps: {
-            target: 60,
-            forceSetTimeOut: true
-        },
         scene: {
             preload: preload,
             create: create,
@@ -41,7 +37,7 @@
     var velocidadeVooHorizontal = 5;    // Variável que influencia frameRate e pixels de deslocamento do passarinho
     var velocidadeVooVertical = 4;      // Variável que influencia o deslocamento vertical do passarinho
 
-    var revoada = [];
+    var revoada = []; // Cria um array de passarinhos
 
     // Função de carregamento dos assets
     function preload() {
@@ -64,21 +60,21 @@
         // Ativa a animação de fly do passarinho
         passarinho.anims.play('fly', true);
 
-        const color = new Phaser.Display.Color();
-        var randomX;
-        var randomY;
+        const color = new Phaser.Display.Color(); // Cria um objeto com cores
+        var randomX; // Váriável para randomizar posição x
+        var randomY; // Váriável para randomizar posição y
 
         for (var i = 0; i <= 10; i++) {
-            randomX = Phaser.Math.Between(50, 750);
-            randomY = Phaser.Math.Between(50, 550);
+            randomX = Phaser.Math.Between(50, 750); // Função de randomização
+            randomY = Phaser.Math.Between(50, 550); // Função de randomização
             revoada[i] = this.add.sprite(randomX, randomY, 'bird').setScale(1);
             revoada[i].anims.play('fly', true);
-            // console.log("i: "+i)
+            // Ajusta a orientação para i par
             if(i%2==0) {
                 revoada[i].setFlip(true,false);
             }
-
-            color.random(10);
+            // Randomiza a cor de cada passarinho em revoada[]
+            color.random(0,255);
             revoada[i].setTintFill(color.color);
         }
 
@@ -90,32 +86,32 @@
         // console.log("delta: "+this.game.loop.delta)
 
             // --- Lógica de movimento infinito do passarinho
-            if (passarinho.x === 100 && passarinho.y === 300) {                             // Condição ativada quando passarinho possui x = 100
-                passarinho.setFlip(false,false);                    // Define a orientação do passarinho para a direita
-                passarinho.ida = true;                              // Define a propriedade booleana "ida" de passarinho para verdadeira
+            if (passarinho.x === 100 && passarinho.y === 300) {      // Condição ativada quando passarinho possui x = 100
+                passarinho.setFlip(false,false);                     // Define a orientação do passarinho para a direita
+                passarinho.ida = true;                               // Define a propriedade booleana "ida" de passarinho para verdadeira
             }
-            if (passarinho.x < 400 && passarinho.ida === true) {    // Condição ativada quando passarinho possui x < 700 e variável pass.ida é verdadeira
-                console.log("Indo para a direita e baixo");                 // Log de direção
-                passarinho.x += velocidadeVooHorizontal;                      // Cria o deslocamento contínuo positivo horizontal de 5 pixels para passarinho
+            if (passarinho.x < 400 && passarinho.ida === true) {     // Condição ativada quando passarinho possui x < 700 e variável pass.ida é verdadeira
+                console.log("Indo para a direita e baixo");          // Log de direção
+                passarinho.x += velocidadeVooHorizontal;             // Cria o deslocamento contínuo positivo horizontal de 5 pixels para passarinho
                 passarinho.y += velocidadeVooVertical;
             }
             if (passarinho.x >= 400 && passarinho.ida === true) {    // Condição ativada quando passarinho possui x < 700 e variável pass.ida é verdadeira
-                console.log("Indo para a direita e alto");                 // Log de direção
-                passarinho.x += velocidadeVooHorizontal;                      // Cria o deslocamento contínuo positivo horizontal de 5 pixels para passarinho
+                console.log("Indo para a direita e alto");           // Log de direção
+                passarinho.x += velocidadeVooHorizontal;             // Cria o deslocamento contínuo positivo horizontal de 5 pixels para passarinho
                 passarinho.y -= velocidadeVooVertical;
             }
-            if (passarinho.x === 700) {                             // Condição ativada quando passarinho possui x = 700
-                passarinho.setFlip(true,false);                     // Define a orientação do passarinho para a esquerda
-                passarinho.ida = false;                             // Define a propriedade booleana "ida" de passarinho para falsa
+            if (passarinho.x === 700) {                              // Condição ativada quando passarinho possui x = 700
+                passarinho.setFlip(true,false);                      // Define a orientação do passarinho para a esquerda
+                passarinho.ida = false;                              // Define a propriedade booleana "ida" de passarinho para falsa
             }
-            if (passarinho.x > 400 && passarinho.ida === false) {   // Condição ativada quando passarinho possui x > 100 e variável pass.ida é falsa
-                console.log("Indo para a esqueda e alto");                 // Log de direção
-                passarinho.x -= velocidadeVooHorizontal;                      // Cria o deslocamento contínuo negativo de 5 pixels para passarinho
+            if (passarinho.x > 400 && passarinho.ida === false) {    // Condição ativada quando passarinho possui x > 100 e variável pass.ida é falsa
+                console.log("Indo para a esqueda e alto");           // Log de direção
+                passarinho.x -= velocidadeVooHorizontal;             // Cria o deslocamento contínuo negativo de 5 pixels para passarinho
                 passarinho.y -= velocidadeVooVertical;
             }
             if (passarinho.x <= 400 && passarinho.ida === false) {   // Condição ativada quando passarinho possui x > 100 e variável pass.ida é falsa
-                console.log("Indo para a esqueda e baixo");                 // Log de direção
-                passarinho.x -= velocidadeVooHorizontal;                      // Cria o deslocamento contínuo negativo de 5 pixels para passarinho
+                console.log("Indo para a esqueda e baixo");          // Log de direção
+                passarinho.x -= velocidadeVooHorizontal;             // Cria o deslocamento contínuo negativo de 5 pixels para passarinho
                 passarinho.y += velocidadeVooVertical;
             }
 
