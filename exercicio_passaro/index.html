@@ -33,9 +33,10 @@
     };
 
     var game = new Phaser.Game(config);
+    
     var passarinho;
-    var velocidadeVooHorizontal = 5; // Variável que influencia frameRate e pixels de deslocamento do passarinho
-    var velocidadeVooVertical = 4;
+    var velocidadeVooHorizontal = 5;    // Variável que influencia frameRate e pixels de deslocamento do passarinho
+    var velocidadeVooVertical = 4;      // Variável que influencia o deslocamento vertical do passarinho
 
     // Função de carregamento dos assets
     function preload() {
@@ -51,7 +52,7 @@
         this.anims.create({
             key: 'fly',
             frames: this.anims.generateFrameNumbers('bird', { start: 0, end: 7 }),
-            frameRate: velocidadeVooHorizontal*2,
+            frameRate: velocidadeVooHorizontal*2, // Set frameRate para o dobro de velocidadeVooHorizontal
             repeat: -1
         });
 
